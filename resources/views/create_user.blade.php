@@ -77,14 +77,11 @@
         <form action="{{ route('user.store') }}" method="post">
             @csrf
             <label for="nama">Nama:</label>
-            <input type="text" id="nama" name="nama" value="John">
-            
-            <label for="kelas">Kelas:</label>
-            <input type="text" id="kelas" name="kelas" value="Doe">
-            
+            <input type="text" id="nama" name="nama" value="Rini Puspita Wati">
             <label for="npm">NPM:</label>
-            <input type="text" id="npm" name="npm" value="Doe">
-            
+            <input type="text" id="npm" name="npm" value="2257051019">
+            <label for="kelas">Kelas:</label>
+            <input type="text" id="kelas" name="kelas" value="A">
             <input type="submit" value="Submit">
         </form>
     </div>

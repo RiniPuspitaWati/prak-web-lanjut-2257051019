@@ -99,8 +99,9 @@
             </div>
             <div class="info">
                 <div class="label">Nama: {{ $nama }}</div>
-                <div class="label">Kelas: {{ $kelas }}</div>
                 <div class="label">Npm: {{ $npm }}</div>
+                <div class="label">Kelas: {{ $kelas }}</div>
+
             </div>
         </div>
     </div>
