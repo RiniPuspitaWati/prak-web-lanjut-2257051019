@@ -71,10 +71,7 @@
         }
     </style>
 </head>
-@extends('layouts.app')
-
-@section('content')
-
+<body> 
     <!-- <div class="login-container">
         <h1>Create User</h1>
         <form action="{{ route('user.store') }}" method="post">
@@ -150,7 +147,7 @@
             margin-bottom: 10px;
         }
     </style>
-@endsection
+</body>
 </html> 
 
 
