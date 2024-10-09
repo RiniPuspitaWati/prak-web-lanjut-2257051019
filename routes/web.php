@@ -24,3 +24,9 @@ Route::get('/', function () {
 Route::get('/profile/{nama}', [ProfileController::class, 'profile']);
 Route::get('/user/create', [UserController::class, 'create']);
 Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+
+// Route untuk tugas 5
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
+
+Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+Route::delete('/users/delete/{id}', [UserController::class, 'destroy'])->name('users.delete');
