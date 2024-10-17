@@ -3,108 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Card</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Profile</title>
     <style>
-        /* General styling */
         body {
-            margin: 0;
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin: 0;
+            background: linear-gradient(135deg, #a6c1ee, #fbc2eb); /* Two-color gradient (light blue and soft pink) */
+            position: relative; /* Make sure the button can be positioned */
         }
 
-        /* Background wrapper */
-        .background-wrapper {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .btn-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #fbc2eb; /* Same pink as the gradient */
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        /* Profile card styling */
-        .profile-card {
-            background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            width: 300px;
-            text-align: center;
-            padding: 20px;
-            position: relative;
+        .btn-back:hover {
+            background-color: #f9a1d1; /* Slightly darker pink for hover */
         }
 
-        /* Avatar styling */
-        .avatar {
-            width: 100px;
-            height: 100px;
+        .profile-image img {
             border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto 20px;
-            border: 5px solid #ff79c6;
+            width: 150px;
+            height: 150px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            transition: box-shadow 0.3s ease;
         }
 
-        .avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .profile-image img:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-container {
+            background-color: #5a9bd8; /* Calm blue background for the container */
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+            width: 500px;
+            text-align: center;
         }
 
-        /* Info styling */
-        .info {
+        .profile-info {
             margin-top: 20px;
         }
 
-        .label {
-            color: #333;
-            font-size: 18px;
+        .info-item {
+            background-color: #d3eafd; /* Light blue info box */
+            color: black;
             margin: 10px 0;
-            background: #ff79c6;
             padding: 10px;
             border-radius: 10px;
-            color: white;
-        }
-        
-        /* Decorative elements */
-        .profile-card::before, .profile-card::after {
-            content: '';
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: rgba(255, 121, 198, 0.5);
-            border-radius: 50%;
-            z-index: -1;
+            font-weight: 600;
+            text-align: center;
+            font-size: 16px;
         }
 
-        .profile-card::before {
-            top: -20px;
-            right: -20px;
-        }
-
-        .profile-card::after {
-            bottom: -20px;
-            left: -20px;
+        h1 {
+            color: #ffffff; /* White text for the heading */
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="background-wrapper">
-        <div class="profile-card">
-            <div class="avatar">
-                <img src="/assets/image/ping.jpeg" alt="Profile Picture">
-            </div>
-            <div class="info">
-                <div class="label">Nama: {{ $nama }}</div>
-                <div class="label">Npm: {{ $npm }}</div>
-                <div class="label">Kelas: {{ $nama_kelas ?? 'Kelas tidak ditemukan'}}</div>
 
-            </div>
+    <!-- Button to go back to the list of users -->
+    <a href="{{ route('users.index') }}" class="btn-back">Kembali ke Daftar Pengguna</a>
+
+    <div class="profile-container">
+        <div class="profile-image">
+            <img src="{{ asset($user->foto ?? 'assets/img/default-foto.jpg') }}" alt="Profile Image">
+        </div>
+
+        <div class="profile-info">
+            <div class="info-item">Nama: {{ $user->nama }}</div>
+            <div class="info-item">NPM: {{ $user->npm }}</div>
+            <div class="info-item">Kelas: {{ $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan' }}</div>
         </div>
     </div>
 </body>
 </html>
-
