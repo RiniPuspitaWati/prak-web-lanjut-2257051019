@@ -7,27 +7,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background: linear-gradient(135deg, #74ebd5, #ACB6E5); /* Background gradient */
+            background: linear-gradient(135deg, #6DD5FA, #2980B9); /* New background gradient */
         }
         .container {
             background-color: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            width: 500px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Deeper shadow for modern feel */
+            width: 600px; /* Wider form */
             text-align: center;
         }
         h1 {
             color: #333;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 25px;
         }
         form {
             display: flex;
@@ -37,53 +37,57 @@
         label {
             font-weight: 600;
             margin-bottom: 5px;
-            color: #333;
-            font-size: 14px;
+            color: #555;
+            font-size: 16px;
+            text-align: left;
+            width: 100%;
         }
         input, select {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 14px;
+            margin-bottom: 20px;
             border: 1px solid #ccc;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
         }
         input:focus, select:focus {
-            border-color: #28a745;
-            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+            border-color: #3498db;
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.6);
             outline: none;
         }
         input:hover, select:hover {
             border-color: #999;
         }
         button {
-            background-color: #28a745;
+            background-color: #3498db;
             color: white;
-            padding: 12px;
-            font-size: 16px;
+            padding: 14px 20px;
+            font-size: 18px;
             font-weight: 600;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); /* Button shadow for depth */
         }
         button:hover {
-            background-color: #218838;
-            transform: scale(1.05);
+            background-color: #2980B9;
+            transform: translateY(-2px); /* Button hover effect */
         }
         button:active {
-            transform: scale(1);
+            transform: scale(0.98); /* Press effect */
         }
         /* Responsive Design */
-        @media (max-width: 500px) {
+        @media (max-width: 768px) {
             .container {
                 width: 90%;
                 padding: 20px;
             }
             input, select, button {
                 font-size: 14px;
-                padding: 10px;
+                padding: 12px;
             }
         }
     </style>
@@ -96,10 +100,10 @@
     <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="nama">Nama:</label>
-        <input type="text" id="nama" name="nama" required>
+        <input type="text" id="nama" name="nama" required placeholder="Masukkan Nama">
 
         <label for="npm">NPM:</label>
-        <input type="text" id="npm" name="npm" required>
+        <input type="text" id="npm" name="npm" required placeholder="Masukkan NPM">
 
         <label for="kelas_id">Kelas:</label>
         <select id="kelas_id" name="kelas_id" required>
