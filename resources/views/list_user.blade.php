@@ -2,120 +2,135 @@
 
 @section('content')
 <style>
-    /* CSS untuk styling tabel pengguna */
+    /* CSS for styling the user table */
     table {
         width: 100%;
         border-collapse: collapse;
         margin: 20px 0;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for the table */
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+        border-radius: 8px;
+        overflow: hidden;
     }
 
     th, td {
-        padding: 15px 20px;
+        padding: 18px 20px; /* Adjusted padding for cleaner look */
         text-align: left;
         border-bottom: 1px solid #ddd;
     }
 
     th {
-        background-color: #4f9ec4; /* Warna biru medium */
-        color: #fff; /* Warna teks header putih */
-        text-transform: uppercase; /* Uppercase text for header */
-        font-weight: 600;
+        background-color: #4a90e2; /* Richer blue for header */
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 15px;
     }
 
     td {
-        background-color: #f9f9f9; /* Light gray for table rows */
+        background-color: #fff; /* White background for better contrast */
         color: #333;
         font-size: 14px;
-        font-weight: 500;
     }
 
     tr:hover td {
-        background-color: #f1f1f1; /* Warna saat hover pada row */
+        background-color: #f2f6fc; /* Softer hover effect for table rows */
+        cursor: pointer;
     }
 
-    /* Gaya untuk tombol */
+    /* Button styles */
     .btn-primary, .btn-danger, .btn-warning {
-        padding: 8px 16px; /* Ukuran tombol seragam */
-        font-size: 14px; /* Ukuran font */
-        margin-right: 5px; /* Spasi antar tombol */
-        border-radius: 5px; /* Rounded corners for buttons */
-        transition: background-color 0.3s ease; /* Smooth transition */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+        padding: 10px 16px;
+        font-size: 14px;
+        border-radius: 6px;
+        margin-right: 8px; /* Space between buttons */
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Button shadow */
     }
 
     .btn-warning {
-        background-color: #ffcc00; /* Warna khusus untuk tombol Detail */
+        background-color: #f39c12; /* Bright orange for detail button */
         color: white;
     }
 
     .btn-primary {
-        background-color: #4f9ec4; /* Warna biru untuk tombol Edit */
+        background-color: #3498db; /* Clean blue for edit button */
         color: white;
     }
 
     .btn-danger {
-        background-color: #d9534f; /* Warna merah untuk tombol Hapus */
+        background-color: #e74c3c; /* Red for delete button */
         color: white;
     }
 
     .btn:hover {
-        opacity: 0.85;
-        cursor: pointer;
+        opacity: 0.9;
     }
 
-    /* Gaya untuk gambar */
+    /* Image styling */
     img {
-        max-width: 100px; /* Maksimal lebar gambar */
-        height: auto; /* Menyesuaikan tinggi gambar secara proporsional */
-        border-radius: 10px; /* Rounded corners for images */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow for images */
+        max-width: 100px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Soft shadow for images */
     }
 
     /* Styling for the "List Data" heading */
     h2 {
-        font-size: 28px;
+        font-size: 32px;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
         font-weight: bold;
         color: #333;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        letter-spacing: 1px;
     }
 
-    /* Centering the "Tambah Pengguna Baru" button */
+    /* Button container */
     .btn-container {
         display: flex;
         justify-content: flex-start;
         margin-bottom: 20px;
     }
 
-    /* Styling for the "Tambah Pengguna Baru" button */
+    /* Button for adding new users */
     .btn-primary-add {
-        padding: 10px 20px;
+        padding: 12px 20px;
         font-size: 16px;
         background-color: #28a745;
         color: white;
-        border-radius: 5px;
+        border-radius: 6px;
         text-decoration: none;
         font-weight: bold;
         transition: background-color 0.3s ease;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Button shadow */
     }
 
     .btn-primary-add:hover {
         background-color: #218838;
     }
+
+    /* Responsive table for smaller devices */
+    @media (max-width: 768px) {
+        table, th, td {
+            font-size: 12px;
+            padding: 12px;
+        }
+        .btn-primary-add {
+            width: 100%;
+            text-align: center;
+        }
+    }
 </style>
 
-<!-- Container for "Tambah Pengguna Baru" button -->
+<!-- Add New User button -->
 <div class="btn-container">
     <a href="{{ route('users.create') }}" class="btn-primary-add">Tambah Pengguna Baru</a>
 </div>
 
-<!-- "List Data" heading -->
+<!-- Table heading -->
 <h2>List Data</h2>
 
-<!-- Table for users data -->
+<!-- Users table -->
 <table>
     <thead>
         <tr>
@@ -135,7 +150,7 @@
                 <td>{{ $user->npm }}</td>
                 <td>{{ $user->kelas->nama_kelas ?? 'Kelas Tidak Ditemukan' }}</td>
                 <td>
-                    <!-- Menampilkan gambar jika ada, jika tidak menampilkan pesan 'Tidak ada gambar' -->
+                    <!-- Display image or placeholder text -->
                     @if($user->foto)
                         <img src="{{ asset($user->foto ?? 'uploads/img/default.jpg') }}" alt="Foto Pengguna">
                     @else
@@ -143,17 +158,17 @@
                     @endif
                 </td>
                 <td>
-                    <!-- Tombol Edit -->
+                    <!-- Edit button -->
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Edit</a>
 
-                    <!-- Tombol Hapus -->
+                    <!-- Delete button -->
                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
                     </form>
 
-                    <!-- Tombol Detail dengan ukuran yang sama dengan Edit dan Delete -->
+                    <!-- View button -->
                     <a href="{{ route('users.show', $user->id) }}" class="btn btn-warning">View</a>
                 </td>
             </tr>

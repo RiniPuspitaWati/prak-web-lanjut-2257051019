@@ -29,3 +29,7 @@ Route::resource('users', UserController::class);
 Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
 Route::delete('/user/delete/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 Route::get('/show/{id}', [UserController::class, 'show'])->name('user.show');
+Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
+Route::get('/user', [UserController::class, 'index'])->name('user.list');
+Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
