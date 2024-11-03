@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create User_PWL</title>
+    <title>Create User Form</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
@@ -92,19 +92,24 @@
         }
     </style>
 </head>
-@extends('layouts.app')
 
-@section('content')
+@extends('layouts.app') 
+@section('content') 
 <div class="container">
-    <h1>Create User</h1>
+    <h2>Create User</h2>
+
     <form action="{{ route('user.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+
+        <!-- Input Nama -->
         <label for="nama">Nama:</label>
-        <input type="text" id="nama" name="nama" required placeholder="Masukkan Nama">
+        <input type="text" id="nama" name="nama" placeholder="Nama" required>
 
+        <!-- Input NPM -->
         <label for="npm">NPM:</label>
-        <input type="text" id="npm" name="npm" required placeholder="Masukkan NPM">
+        <input type="text" id="npm" name="npm" placeholder="NPM" required>
 
+        <!-- Select Kelas -->
         <label for="kelas_id">Kelas:</label>
         <select id="kelas_id" name="kelas_id" required>
             <option value="" disabled selected>Pilih Kelas</option>
@@ -113,9 +118,28 @@
             @endforeach
         </select>
 
+        <!-- Select Jurusan -->
+        <label for="jurusan">Jurusan:</label>
+        <select id="jurusan" name="jurusan" required>
+            <option value="" disabled selected>Pilih Jurusan</option>
+            <option value="S1 - Ilmu Komputer">S1 - Ilmu Komputer</option>
+            <option value="S1 - Sistem Informasi">S1 - Sistem Informasi</option>
+            <option value="D3 - Manajemen Informatika">D3 - Manajemen Informatika</option>
+            <!-- Tambahkan jurusan lainnya jika diperlukan -->
+        </select>
+
+        <label for="fakultas">Fakultas:</label>
+        <select id="fakultas" name="fakultas" required>
+            <option value="" disabled selected>Pilih Fakultas</option>
+            <option value="FAKULTAS MIPA">MATEMATIKA DAN ILMU PENGETAHUAN ALAM</option>
+        </select>
+
+        
+        <!-- Input Foto -->
         <label for="foto">Foto:</label>
         <input type="file" id="foto" name="foto"><br><br>
 
+        <!-- Tombol Submit -->
         <button type="submit">Submit</button>
     </form>
 </div>
