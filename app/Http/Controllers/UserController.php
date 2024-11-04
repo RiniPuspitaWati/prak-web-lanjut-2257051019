@@ -33,71 +33,45 @@ class UserController extends Controller
 
     public function index() 
     { 
-        $data = [ 
-            'title' => 'Create User', 
-            'kelas' => $this->userModel->getUser(), 
-        ]; 
-    
         $users = UserModel::with('kelas')->get();
     
-        return view('list_user', compact('users'), $data); 
+        return view('list_user', [
+            'title' => 'User List',
+            'users' => $users,
+        ]); 
     }
-
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'nama' => 'required|string|max:255',
-    //         'npm' => 'required|string|max:255',
-    //         'kelas_id' => 'required|integer',
-    //         'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    //     ]);
-
-    //     if ($request->hasFile('foto')) {
-    //         $foto = $request->file('foto');
-    //         $fotoName = time() . '_' . $foto->getClientOriginalName(); 
-    //         $fotoPath = $foto->move(public_path('uploads/img'), $fotoName); 
-    //         $fotoPath = 'uploads/img/' . $fotoName;
-    //     } else {
-    //         $fotoPath = null;
-    //     }
-
-    //     $this->userModel->create([
-    //         'nama' => $request->input('nama'),
-    //         'npm' => $request->input('npm'),
-    //         'kelas_id' => $request->input('kelas_id'),
-    //         'foto' => $fotoPath,
-    //     ]);
-
-    //     return redirect()->to('/user')->with('success', 'User berhasil ditambahkan');
-    // }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'nama' => 'required|string|max:255',
-        'npm' => 'required|string|max:255',
-        'kelas_id' => 'required|integer',
-        'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'npm' => 'required|string|max:255',
+            'kelas_id' => 'required|integer',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'jurusan' => 'required|string|max:255',
+            'fakultas' => 'required|string|max:255',
+        ]);
 
-    if ($request->hasFile('foto')) {
-        $foto = $request->file('foto');
-        $fotoName = time() . '_' . $foto->getClientOriginalName(); 
-        $fotoPath = $foto->move(public_path('uploads/img'), $fotoName); 
-        $fotoPath = 'uploads/img/' . $fotoName;
-    } else {
-        $fotoPath = null;
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $fotoName = time() . '_' . $foto->getClientOriginalName(); 
+            $fotoPath = $foto->move(public_path('uploads/img'), $fotoName); 
+            $fotoPath = 'uploads/img/' . $fotoName;
+        } else {
+            $fotoPath = null;
+        }
+
+        $this->userModel->create([
+            'nama' => $request->input('nama'),
+            'npm' => $request->input('npm'),
+            'kelas_id' => $request->input('kelas_id'),
+            'foto' => $fotoPath,
+            'jurusan' => $request->input('jurusan_id'), 
+            'fakultas' => $request->input('fakultas'),
+        ]);
+
+        return redirect()->to('/user')->with('success', 'User berhasil ditambahkan');
     }
-
-    $this->userModel->create([
-        'nama' => $request->input('nama'),
-        'npm' => $request->input('npm'),
-        'kelas_id' => $request->input('kelas_id'),
-        'foto' => $fotoPath, // Menyimpan path foto ke database
-    ]);
-
-    return redirect()->to('/user')->with('success', 'User berhasil ditambahkan');
-}
 
     public function show($id){
         $user = $this->userModel->getUser($id);
@@ -113,32 +87,34 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = UserModel::findOrFail($id);
-        $kelasModel = new Kelas();
-        $kelas = $kelasModel->getKelas();
+        $kelas = $this->kelasModel->getKelas();
         $title = 'Edit User';
+
         return view('edit_user', compact('user', 'kelas', 'title'));
     }
 
     public function update(Request $request, $id)
-{
-    $user = UserModel::findOrFail($id);
+    {
+        $user = UserModel::findOrFail($id);
 
-    $user->nama = $request->nama;
-    $user->npm = $request->npm;
-    $user->kelas_id = $request->kelas_id;
+        $user->nama = $request->nama;
+        $user->npm = $request->npm;
+        $user->kelas_id = $request->kelas_id;
+        $user->jurusan = $request->jurusan;
+        $user->fakultas = $request->fakultas;
 
-    if ($request->hasFile('foto')) {
-        $fileName = time() . '.' . $request->foto->extension();
-        $request->foto->move(public_path('uploads'), $fileName);
-        $user->foto = 'uploads/' . $fileName;
+        if ($request->hasFile('foto')) {
+            $fileName = time() . '.' . $request->foto->extension();
+            $request->foto->move(public_path('uploads'), $fileName);
+            $user->foto = 'uploads/' . $fileName;
+        }
+
+        $user->save();
+
+        return redirect()->route('user.list')->with('success', 'User updated successfully');
     }
 
-    $user->save();
-
-    return redirect()->route('user.list')->with('success', 'User updated successfully');
-}
-
-public function destroy($id)
+    public function destroy($id)
     {
         $user = UserModel::findOrFail($id);
         $user->delete();
@@ -162,7 +138,9 @@ public function destroy($id)
             'profile_picture' => $profile_picture_path,
             'nama' => $request->input('nama'),
             'npm' => $request->input('npm'),
-            'nama_kelas' => $request->input('kelas_id') 
+            'nama_kelas' => $request->input('kelas_id'),
+            'jurusan' => $request->input('jurusan'),
+            'fakultas' => $request->input('fakultas'),
         ]);
     }
 
@@ -173,7 +151,9 @@ public function destroy($id)
         return view('profile', [
             'nama' => $user->nama,
             'npm' => $user->npm,
-            'nama_kelas' => $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan', 
+            'nama_kelas' => $user->kelas->nama_kelas ?? 'Kelas tidak ditemukan',
+            'jurusan' => $user->jurusan ?? 'Jurusan tidak ditemukan',
+            'fakultas' => $user->fakultas ?? 'Fakultas tidak ditemukan',
             'profile_picture' => session('profile_picture', 'public/assets/img/default.jpg'),
         ]);
     }

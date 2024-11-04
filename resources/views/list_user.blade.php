@@ -131,6 +131,7 @@
 <h2>List Data</h2>
 
 <!-- Users table -->
+<!-- Users table -->
 <table>
     <thead>
         <tr>
@@ -139,6 +140,8 @@
             <th>NPM</th>
             <th>Kelas</th>
             <th>Foto</th>
+            <th>Jurusan</th>
+            <th>Fakultas</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -150,29 +153,26 @@
                 <td>{{ $user->npm }}</td>
                 <td>{{ $user->kelas->nama_kelas ?? 'Kelas Tidak Ditemukan' }}</td>
                 <td>
-                    <!-- Display image or placeholder text -->
                     @if($user->foto)
-                        <img src="{{ asset($user->foto ?? 'uploads/img/default.jpg') }}" alt="Foto Pengguna">
+                        <img src="{{ asset($user->foto) }}" alt="Foto Pengguna">
                     @else
                         <span>Foto tidak tersedia</span>
                     @endif
                 </td>
+                <td>{{ $user->jurusan->nama_jurusan ?? 'Jurusan Tidak Ditemukan' }}</td>
+                <td>{{ $user->fakultas->nama_fakultas ?? 'Fakultas Tidak Ditemukan' }}</td>
                 <td>
-                    <!-- Edit button -->
                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Edit</a>
-
-                    <!-- Delete button -->
                     <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
                     </form>
-
-                    <!-- View button -->
                     <a href="{{ route('users.show', $user->id) }}" class="btn btn-warning">View</a>
                 </td>
             </tr>
         @endforeach
     </tbody>
 </table>
+
 @endsection
